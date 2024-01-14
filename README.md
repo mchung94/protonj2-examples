@@ -91,9 +91,9 @@ direct_logs exchange but only receive messages of the severity they are
 interested in.
 
 The way I handled it in my example is to simulate the exchange + routing key
-concept with addresses named <exchange>.<routing_key> and then have queues
-bound to that address. For example, direct_logs.info, direct_logs.warning, and
-direct_logs.error.
+concept with addresses named `<exchange>.<routing_key>` and then have queues
+bound to that address. For example, `direct_logs.info`, `direct_logs.warning`,
+and `direct_logs.error`.
 
 You can have multiple queues bound to the same address, so error logs can go to
 multiple consumers. But I can't find a good way to have a single queue listen

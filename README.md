@@ -130,5 +130,3 @@ Then I could create the work queue pattern on each address.
 These will be named, durable queues where all messages are persistent. Then I
 can run many instances of each receiver, and they can split the work like a work
 queue.
-
-I still have to get this working properly.

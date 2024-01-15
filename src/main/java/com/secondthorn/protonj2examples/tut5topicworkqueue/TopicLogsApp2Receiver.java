@@ -15,7 +15,7 @@ public class TopicLogsApp2Receiver {
             ReceiverOptions receiverOptions = new ReceiverOptions();
             receiverOptions.autoAccept(false); // manually ack / accept deliveries
             receiverOptions.creditWindow(1); // prefetch 1
-            receiverOptions.sourceOptions().capabilities("queue");
+            receiverOptions.sourceOptions().capabilities("topic");
             Receiver receiver = connection.openReceiver("topic_logs.app2::topic_logs_app2", receiverOptions);
             while (true) {
                 Delivery delivery = receiver.receive();

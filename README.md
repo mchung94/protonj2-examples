@@ -103,3 +103,32 @@ for both error and warning logs.
 You may be able to set up queues to listen to multiple addresses from the
 broker config file? But I have not found anything about doing it either from
 the Artemis web console interface, or programmatically.
+
+## Tutorial 5: Topics
+At this time, I learned about setting properties on a Message - they're just
+a String to Object mapping.
+
+If the sender sends a message to the address "topic_logs.kern.critical", a
+receiver can receive the message if they open the address "topic_logs.#", but
+then there's no direct way I know of to know that the original address of the
+message was "topic_logs.kern.critical".  But if I set that as a property of
+the message, the receiver can look it up.
+
+### Tutorial 5 Part 2: Topic Work Queues
+This is something I was personally curious about, even though it's not on the
+RabbitMQ tutorial. I wanted to combine Topic and Work Queue functionality.
+
+I want an example where a message producer sends messages to addresses like:
+- topic_logs.app1
+- topic_logs.app2
+
+Then I could create the work queue pattern on each address.
+- TopicLogsApp1Receiver creates a work queue that listens to topic_logs.app1
+- TopicLogsApp2Receiver creates a work queue that listens to topic_logs.app2
+- TopicLogsAllReceiver creates a work queue that listens to topic_logs.#
+
+These will be named, durable queues where all messages are persistent. Then I
+can run many instances of each receiver, and they can split the work like a work
+queue.
+
+I still have to get this working properly.

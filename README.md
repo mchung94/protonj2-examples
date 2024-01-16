@@ -61,6 +61,12 @@ it is customary to set both the address and queue to the name of the queue and
 use anycast. In the code, if I set the capabilities to "queue", it'll create
 the queue and address with the right parameters for this example.
 
+### Tutorial 1 Part 2: Sending Bytes
+This isn't part of the RabbitMQ tutorial, but I wanted an example where I
+serialized an object into a byte array, sent that as a message, and then have
+the receiver deserialize the object. I just wanted an example of sending bytes
+instead of a String.
+
 ## Tutorial 2: Work Queues
 On the receiver (Worker.java):
 - I've disabled auto-ack on the receiver with `autoAccept(false)`
@@ -130,3 +136,21 @@ Then I could create the work queue pattern on each address.
 These will be named, durable queues where all messages are persistent. Then I
 can run many instances of each receiver, and they can split the work like a work
 queue.
+
+## Tutorial 6: RPC
+The Server implements a Fibonacci method.
+
+The client will:
+- Create an Integer argument to call the Fibonacci method with.
+- Create a UUID as a Correlation ID as a unique ID for each request.
+- Create a DynamicReceiver as a replyTo queue for the RPC Server to send the
+  response to.
+- Send the message to the RPC server.
+- Wait for a response on the DynamicReceiver.
+- Check if the response has the same Correlation ID and print the result.
+
+The server will:
+- Receive Message<Integer> with the argument to call the Fibonacci method.
+- Calculate the Fibonacci number as a Message<Integer> response, and set the
+  Correlation ID it received from the incoming message, to the response message.
+- Send the response to the replyTo queue.
